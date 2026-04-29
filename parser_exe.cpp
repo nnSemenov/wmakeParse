@@ -18,6 +18,7 @@ struct task_info {
   bool print_all_vars{false};
   std::string get_variable_name;
   bool parse_brace_expression{false};
+  bool strict{false};
 };
 
 int run_task(const task_info& task);
@@ -39,6 +40,8 @@ int main(int argc, char** argv) {
   app.add_option("--get", task.get_variable_name, "Get variable name");
   app.add_flag("--parse-brace-expression", task.parse_brace_expression,
                "Parse ${} expression");
+  app.add_flag("--strict", task.strict,
+               "Throw exception when facing referencing undefined variable");
 
   CLI11_PARSE(app, argc, argv);
 
@@ -55,10 +58,15 @@ int run_task(const task_info& task) {
     return file_content;
   }();
 
-  auto env = Foam::wmakeParse::get_environment_variables();
-  std::map<std::string, std::string> new_vars = env;
   Foam::wmakeParse::wmake_parse_option option;
   option.parse_brace_expression = task.parse_brace_expression;
+  if (task.strict) {
+    option.when_undefined_reference =
+        Foam::wmakeParse::undefined_reference_behavior::throw_exception;
+  }
+
+  auto env = Foam::wmakeParse::get_environment_variables();
+  std::map<std::string, std::string> new_vars = env;
 
   std::vector<std::string> files;
   try {
