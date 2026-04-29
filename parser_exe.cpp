@@ -7,7 +7,7 @@
 #include <format>
 #include <iostream>
 
-#include <CLI/CLI.hpp>
+#include <CLI11.hpp>
 #include <parse_wmake.H>
 
 namespace fs = std::filesystem;

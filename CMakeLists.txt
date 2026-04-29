@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(wmakeParse LANGUAGES CXX VERSION 0.1.2)
+project(wmakeParse LANGUAGES CXX VERSION 0.1.3)
 
 include(cmake/3rdParty/cli11.cmake)
 
