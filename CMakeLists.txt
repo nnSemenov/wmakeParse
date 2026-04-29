@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 3.28)
-project(wmakeParse LANGUAGES CXX VERSION 0.1.0)
+project(wmakeParse LANGUAGES CXX VERSION 0.1.1)
 
 add_library(wmakeParse STATIC
     parse_wmake.H
     parse_wmake.C
 )
 
+set_target_properties(wmakeParse PROPERTIES
+    POSITION_INDEPENDENT_CODE ON
+)
 target_compile_features(wmakeParse PRIVATE
     cxx_std_23
 )
