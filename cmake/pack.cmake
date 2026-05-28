@@ -1,0 +1,15 @@
+
+set(CPACK_PACKAGE_VENDOR "https://github.com/nnSemenov")
+set(CPACK_PACKAGE_CONTACT "https://github.com/nnSemenov")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Utility and library to parse wmake config files")
+
+# For debian
+set(CPACK_DEBIAN_PACKAGE_NAME "wmake-parse")
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+# RPM
+set(CPACK_RPM_PACKAGE_NAME "wmake-parse")
+set(CPACK_RPM_PACKAGE_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+include(CPack)

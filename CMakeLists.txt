@@ -50,34 +50,7 @@ target_link_libraries(parse-wmake PRIVATE
     wmakeParse
 )
 
-install(FILES
-    parse_wmake.H
-    DESTINATION include
-)
-
-install(TARGETS wmakeParse parse-wmake
-    EXPORT wmakeParseTargets
-    PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
-                GROUP_READ GROUP_EXECUTE
-                WORLD_READ WORLD_EXECUTE
-)
-include(CMakePackageConfigHelpers)
-configure_package_config_file(cmake/wmakeParseConfig.cmake.in
-    ${CMAKE_BINARY_DIR}/wmakeParseConfig.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}
-)
-write_basic_package_version_file(${CMAKE_BINARY_DIR}/wmakeParseConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion
-)
-
-install(FILES
-    ${CMAKE_BINARY_DIR}/wmakeParseConfig.cmake
-    ${CMAKE_BINARY_DIR}/wmakeParseConfigVersion.cmake
-    DESTINATION lib/cmake/wmakeParse
-)
-install(EXPORT wmakeParseTargets
-    FILE wmakeParseTargets.cmake
-    DESTINATION lib/cmake/wmakeParse
-    NAMESPACE wmakeParse::
-)
+# install operations
+include(cmake/install.cmake)
+# make package
+include(cmake/pack.cmake)
