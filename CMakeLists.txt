@@ -31,6 +31,9 @@ target_compile_features(wmakeParse PRIVATE
 target_compile_features(wmakeParse PUBLIC
     cxx_std_17
 )
+target_compile_definitions(wmakeParse PUBLIC
+    WMAKE_PARSE_VERSION=\"${CMAKE_PROJECT_VERSION}\"
+)
 target_include_directories(wmakeParse PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
