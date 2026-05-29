@@ -32,24 +32,19 @@ enum class undefined_reference_behavior {
 };
 
 struct wmake_parse_option {
-  undefined_reference_behavior when_undefined_reference =
-      undefined_reference_behavior::empty_string;
+  undefined_reference_behavior when_undefined_reference = undefined_reference_behavior::empty_string;
   bool parse_brace_expression{false};  // Parse ${VAR}
 };
 
-std::vector<std::string> parse_wmake_file(
-    std::string_view file_content,
-    std::map<std::string, std::string>& parent_dict,
-    const wmake_parse_option& option = {});
+std::vector<std::string> parse_wmake_file(std::string_view file_content,
+                                          std::map<std::string, std::string>& parent_dict,
+                                          const wmake_parse_option& option = {});
 
-[[maybe_unused]] [[nodiscard]] std::map<std::string, std::string>
-get_environment_variables() noexcept;
+[[maybe_unused]] [[nodiscard]] std::map<std::string, std::string> get_environment_variables() noexcept;
 
-[[nodiscard]] std::string parse_link_libs(
-    std::string_view compile_command) noexcept;
+[[nodiscard]] std::string parse_link_libs(std::string_view compile_command) noexcept;
 
-[[nodiscard]] std::string parse_include_dirs(
-    std::string_view raw_compile_command) noexcept;
+[[nodiscard]] std::string parse_include_dirs(std::string_view raw_compile_command) noexcept;
 }  // namespace Foam::wmakeParse
 
 #endif

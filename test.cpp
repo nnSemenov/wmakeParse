@@ -44,8 +44,7 @@ int main() {
   std::vector<std::string> files;
   try {
     Foam::wmakeParse::wmake_parse_option option{};
-    option.when_undefined_reference =
-        Foam::wmakeParse::undefined_reference_behavior::throw_exception;
+    option.when_undefined_reference = Foam::wmakeParse::undefined_reference_behavior::throw_exception;
     files = Foam::wmakeParse::parse_wmake_file(test_string, dict, option);
   } catch (const std::exception& e) {
     std::println(std::cerr, "Failed: {}", e.what());
@@ -53,8 +52,7 @@ int main() {
     return 1;
   }
 
-  std::println("Success, {} files and {} variables:", files.size(),
-               dict.size());
+  std::println("Success, {} files and {} variables:", files.size(), dict.size());
   for (const auto& file : files) {
     std::println("\"{}\"", file);
   }

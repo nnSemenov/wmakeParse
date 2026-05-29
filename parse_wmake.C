@@ -89,8 +89,7 @@ std::optional<size_t> first_quote_location(std::string_view line) {
   return std::nullopt;
 }
 
-std::string evaluate_string(std::string_view raw,
-                            const std::map<std::string, std::string>& vars,
+std::string evaluate_string(std::string_view raw, const std::map<std::string, std::string>& vars,
                             const wmake_parse_option& option) {
   std::string ret;
   for (const auto& seg_ : raw | std::views::split('$')) {
@@ -125,12 +124,10 @@ std::string evaluate_string(std::string_view raw,
 
     const size_t reverse_bracket_loc = seg.find_first_of(reverse_bracket);
     if (reverse_bracket_loc == std::string_view::npos) {
-      throw std::runtime_error{
-          std::format("Found incomplete evaluate expression: \"${}\"", raw)};
+      throw std::runtime_error{std::format("Found incomplete evaluate expression: \"${}\"", raw)};
     }
 
-    const std::string var_name{seg.data() + 1,
-                               seg.data() + reverse_bracket_loc};
+    const std::string var_name{seg.data() + 1, seg.data() + reverse_bracket_loc};
     auto it = vars.find(var_name);
     const char* value = nullptr;
     if (it == vars.end()) {  // non-existence variable
@@ -139,8 +136,7 @@ std::string evaluate_string(std::string_view raw,
           value = "";
           break;
         case undefined_reference_behavior::throw_exception:
-          throw std::runtime_error{
-              std::format("Undefined reference to variable \"{}\"", var_name)};
+          throw std::runtime_error{std::format("Undefined reference to variable \"{}\"", var_name)};
       }
     } else {
       value = it->second.c_str();
@@ -148,17 +144,15 @@ std::string evaluate_string(std::string_view raw,
     assert(value not_eq nullptr);
 
     ret += value;
-    std::string_view reset_part{seg.begin() + reverse_bracket_loc + 1,
-                                seg.end()};
+    std::string_view reset_part{seg.begin() + reverse_bracket_loc + 1, seg.end()};
     ret += reset_part;
   }
 
   return ret;
 }
 
-std::vector<std::string> parse_wmake_file(
-    std::string_view text, std::map<std::string, std::string>& parent_dict,
-    const wmake_parse_option& option) {
+std::vector<std::string> parse_wmake_file(std::string_view text, std::map<std::string, std::string>& parent_dict,
+                                          const wmake_parse_option& option) {
   std::vector<std::string> files;
   auto lines = filter_file_lines(text);
   for (std::string& line : lines) {
@@ -176,8 +170,7 @@ std::vector<std::string> parse_wmake_file(
     std::string_view var_name_raw{line.data(), quote_loc};
     std::string_view var_name = trim(var_name_raw);
 
-    std::string_view var_value_raw{line.begin() + ptrdiff_t(quote_loc + 1),
-                                   line.end()};
+    std::string_view var_value_raw{line.begin() + ptrdiff_t(quote_loc + 1), line.end()};
     std::string_view var_value = trim(var_value_raw);
 
     parent_dict.emplace(var_name, var_value);
@@ -185,8 +178,7 @@ std::vector<std::string> parse_wmake_file(
   return files;
 }
 
-[[maybe_unused]] std::map<std::string, std::string>
-get_environment_variables() noexcept {
+[[maybe_unused]] std::map<std::string, std::string> get_environment_variables() noexcept {
   std::map<std::string, std::string> vars;
 
   for (size_t idx = 0;; idx++) {
