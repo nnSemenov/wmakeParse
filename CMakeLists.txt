@@ -13,7 +13,7 @@
 #wmakeParse. If not, see <https://www.gnu.org/licenses/>.
 
 cmake_minimum_required(VERSION 3.28)
-project(wmakeParse LANGUAGES CXX VERSION 0.2.1)
+project(wmakeParse LANGUAGES CXX VERSION 0.2.2)
 
 include(cmake/3rdParty/cli11.cmake)
 
