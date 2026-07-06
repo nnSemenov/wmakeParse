@@ -23,7 +23,9 @@
 #include <cstdlib>
 #include <format>
 
-#include <unistd.h>
+#include <boost/process/environment.hpp>
+
+// #include <unistd.h>
 
 #include "parse_wmake.H"
 
@@ -181,26 +183,9 @@ std::vector<std::string> parse_wmake_file(std::string_view text, std::map<std::s
 [[maybe_unused]] std::map<std::string, std::string> get_environment_variables() noexcept {
   std::map<std::string, std::string> vars;
 
-  for (size_t idx = 0;; idx++) {
-    const char* expression_c_str = environ[idx];
-    if (expression_c_str == nullptr) {
-      break;
-    }
-    std::string_view expression{expression_c_str};
-    if (expression.empty()) {
-      break;
-    }
-    const size_t eq_loc = expression.find_first_of('=');
-    std::string var_name, value;
-    if (eq_loc == std::string_view::npos) {
-      value = "";
-      var_name = expression;
-    } else {
-      var_name = expression.substr(0, eq_loc);
-      value = expression.substr(eq_loc + 1, std::string_view ::npos);
-    }
-
-    vars.emplace(var_name, value);
+  auto view = boost::process::environment::current();
+  for (auto it : view) {
+    vars.emplace(it.key().string(), it.value().string());
   }
 
   return vars;

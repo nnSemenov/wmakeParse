@@ -13,9 +13,10 @@
 #wmakeParse. If not, see <https://www.gnu.org/licenses/>.
 
 cmake_minimum_required(VERSION 3.28)
-project(wmakeParse LANGUAGES CXX VERSION 0.2.2)
+project(wmakeParse LANGUAGES CXX VERSION 0.2.3)
 
 include(cmake/3rdParty/cli11.cmake)
+include(cmake/3rdParty/boost.cmake)
 
 add_library(wmakeParse STATIC
     parse_wmake.H
@@ -37,6 +38,9 @@ target_compile_definitions(wmakeParse PUBLIC
 target_include_directories(wmakeParse PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
+)
+target_link_libraries(wmakeParse PUBLIC
+    Boost::process
 )
 
 add_executable(test_wmakeParse test.cpp)
